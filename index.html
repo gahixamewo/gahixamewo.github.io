@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Request</h2>
+<input type="hidden" id="ticket"></input>
+<img id="captcha"></img>
+<button type="button" onclick="requestTicket()">Request</button>
+
+<h2>Download</h2>
+<video id="video" controls>
+  <source id="source" type="video/mp4">
+</video>
+<input type="text" id="captchaInput"></input>
+<button type="button" onclick="sendCaptcha()">Download</button>
+
+<script>
+var file = "8T5k_0DSu20";
+var login = "41abdc3b0726659a";
+var key = "oSmbmiqh";
+function requestTicket() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    	var content = JSON.parse(this.responseText);
+        var captcha = content.result.captcha_url;
+        var ticket = content.result.ticket;
+    	console.log(content);
+        document.getElementById("ticket").value = ticket;
+        document.getElementById("captcha").src = captcha;
+        //requestStream(file,ticket);
+    }
+  };
+  xhttp.open("GET",window.location.protocol + "//cors.io/?https://api.openload.co/1/file/dlticket?file=" + file + "&login=" + login + "&key=" + key, true);
+  xhttp.send();
+}
+function sendCaptcha() {
+  requestStream(file,document.getElementById("ticket").value,document.getElementById("captchaInput").value);
+}
+function requestStream(a,b,c) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    	var content = JSON.parse(this.responseText);
+        var videourl = content.result.url;
+        console.log(content.result.url);
+        document.getElementById("video").src = content.result.url;
+        document.getElementById("video").play();
+    }
+  };
+  xhttp.open("GET",window.location.protocol + "//cors.io/?https://api.openload.co/1/file/dl?file=" + a + "&ticket=" + b + "&captcha_response=" + c, true);
+  xhttp.send();
+}
+</script>
+
+</body>
+</html>
