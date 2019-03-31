@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
 <body>
-<h2>Request</h2>
+<p>Request</p>
+<input type="text" id="fileurlInput"></input>
 <input type="hidden" id="ticket"></input>
 <img id="captcha"></img>
 <button type="button" onclick="requestTicket()">Request</button>
 
-<h2>Download</h2>
+<p>Download</p>
 <video id="video" controls>
   <source id="source" type="video/mp4">
 </video>
@@ -14,7 +15,6 @@
 <button type="button" onclick="sendCaptcha()">Download</button>
 
 <script>
-var file = "8T5k_0DSu20";
 var login = "41abdc3b0726659a";
 var key = "oSmbmiqh";
 function requestTicket() {
@@ -30,11 +30,11 @@ function requestTicket() {
         //requestStream(file,ticket);
     }
   };
-  xhttp.open("GET",window.location.protocol + "//cors.io/?https://api.openload.co/1/file/dlticket?file=" + file + "&login=" + login + "&key=" + key, true);
+  xhttp.open("GET",window.location.protocol + "//cors.io/?https://api.openload.co/1/file/dlticket?file=" + document.getElementById("fileurlInput").value + "&login=" + login + "&key=" + key, true);
   xhttp.send();
 }
 function sendCaptcha() {
-  requestStream(file,document.getElementById("ticket").value,document.getElementById("captchaInput").value);
+  requestStream(document.getElementById("fileurlInput").value,document.getElementById("ticket").value,document.getElementById("captchaInput").value);
 }
 function requestStream(a,b,c) {
   console.log(a,b,c);
