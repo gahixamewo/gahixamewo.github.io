@@ -41,11 +41,10 @@ function requestStream(a,b,c) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-    	//var content = JSON.parse(this.responseText);
-        //var videourl = content.result.url;
-        //console.log(content);
-        //document.getElementById("video").src = content.result.url;
-        //document.getElementById("video").play();
+        var content = JSON.parse(this.responseText);
+        console.log(content);
+        document.getElementById("video").src = content.result.url;
+        document.getElementById("video").play();
     }
   };
   xhttp.open("GET",window.location.protocol + "//cors.io/?https://api.openload.co/1/file/dl?file=" + a + "&ticket=" + b + "&captcha_response=" + c, true);
